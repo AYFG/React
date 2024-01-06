@@ -1,6 +1,7 @@
 import { useQuery } from "react-query";
 import axios from "axios";
 
+// queryKey 사용
 const fetchSuperHero = ({ queryKey }) => {
   const heroId = queryKey[1];
   return axios.get(`http://localhost:4000/superheroes/${heroId}`);
