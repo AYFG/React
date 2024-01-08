@@ -34,6 +34,16 @@
       "name": "Cat Woman",
       "alterEgo": "Selina Kyle",
       "id": 7
+    },
+    {
+      "name": "AquaMan",
+      "alterEgo": "Arthur Curry",
+      "id": 8
+    },
+    {
+      "name": "AquaMan 2",
+      "alterEgo": "Arthur Curry 2",
+      "id": 9
     }
   ],
   "friends": [
