@@ -46,11 +46,13 @@ export const RQSuperHeroesPage = () => {
     <>
       <h2>React Query Super Heroes Page</h2>
       <div>
+        <span>Name</span>
         <input
           type="text"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
+        <span>AlterEgo</span>
         <input
           type="text"
           value={alterEgo}
