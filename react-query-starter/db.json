@@ -44,6 +44,11 @@
       "name": "AquaMan 2",
       "alterEgo": "Arthur Curry 2",
       "id": 9
+    },
+    {
+      "name": "Superman",
+      "alterEgo": "woong",
+      "id": 10
     }
   ],
   "friends": [
