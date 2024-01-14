@@ -1,5 +1,5 @@
-import { Component } from "react";
-import styled from "@emotion/styled";
+import { Component } from 'react';
+import styled from '@emotion/styled';
 
 const Container = styled.button`
   border: 0;

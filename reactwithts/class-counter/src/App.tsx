@@ -1,7 +1,9 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { ErrorInfo, useState } from 'react';
+import { Component } from 'react';
 import { Button } from './components/Button/index';
 import { Label } from './components/Label/index';
+import { IScriptSnapshot } from 'typescript';
 const Container = styled.div`
   height: 100vh;
   display: flex;
@@ -17,46 +19,90 @@ const Contents = styled.div`
   align-items: center;
   justify-content: center;
 `;
-// const Label = styled.span`
-//   margin: 0 16px;
-//   font-size: 1.2rem;
-// `;
-// const Button = styled.button`
-//   border: 0;
-//   color: #ffffff;
-//   background-color: #ff5722;
-//   cursor: pointer;
-//   padding: 8px 16px;
-//   border-radius: 4px;
-//   &:hover {
-//     background-color: #ff5722;
-//     opacity: 0.8;
-//   }
-//   &:active {
-//     box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.2);
-//   }
-// `;
+type Props = Record<string, never>;
+interface State {
+  readonly counter: number;
+}
 
-function App() {
-  const [counter, setCounter] = useState(0);
-  const sub = () => {
-    setCounter(counter - 1);
-  };
-  const add = () => {
-    setCounter(counter + 1);
-  };
+export class App extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
 
-  return (
-    <Container>
-      <Title>Counter App</Title>
-      <Contents>
-        <Button label="-" onClick={sub}></Button>
-        {/* <Label>{counter}</Label> */}
-        <Label data={counter} />
-        <Button label="+" onClick={add}></Button>
-      </Contents>
-    </Container>
-  );
+    this.state = {
+      counter: 0,
+    };
+  }
+  private sub = () => {
+    const { counter } = this.state;
+    this.setState({
+      counter: counter - 1,
+    });
+  };
+  private add = () => {
+    const { counter } = this.state;
+    this.setState({
+      counter: counter + 1,
+    });
+  };
+  render() {
+    const { counter } = this.state;
+
+    return (
+      <Container>
+        <Title>Counter App</Title>
+        <Contents>
+          <Button label="-" onClick={this.sub}></Button>
+          <Label data={counter} />
+          <Button label="+" onClick={this.add}></Button>
+        </Contents>
+      </Container>
+    );
+  }
+  static getDerivedStateFromProps(nextProps: Props, prevState: State) {
+    console.log('getDerivedStateFromProps');
+    console.log('nextProps:', nextProps);
+    console.log('prevState:', prevState);
+
+    return null;
+  }
+  componentDidMount() {
+    console.log('componentDidMount');
+  }
+
+  getSnapshotBeforeUpdate(prevProps: Props, prevState: Readonly<State>) {
+    console.log('getSnapshotBeforeUpdate');
+    console.log('prevProps:', prevProps);
+    console.log('prevState:', prevState);
+
+    return {
+      testData: true,
+    };
+  }
+  componentDidUpdate(prevProps: Props, prevState: Readonly<State>, snapshot?: any): void {
+    console.log('componentDidUpdate');
+    console.log('prevProps:', prevProps);
+    console.log('prevState:', prevState);
+    console.log('snapshot:', snapshot);
+  }
+
+  shouldComponentUpdate(nextProps: Props, nextState: State): boolean {
+    console.log('shouldComponentUpdate');
+    console.log('nextProps:', nextProps);
+    console.log('nextState:', nextState);
+    return true;
+  }
+  componentWillUnmount(): void {
+    console.log('componentWillUnmount');
+  }
+
+  componentDidCatch(error: Error, info: React.ErrorInfo): void {
+    console.log('componentDidCatch');
+    console.log('error', error);
+    console.log('info', info);
+    // this.setState({
+    // error:true,
+    // })
+  }
 }
 
 export default App;
