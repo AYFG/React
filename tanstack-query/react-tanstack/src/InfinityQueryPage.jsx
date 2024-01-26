@@ -4,9 +4,11 @@ import axios from "axios";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-const fetchFood = ({ pageParam = 1 }) => {
+const fetchFood = async ({ pageParam = 1 }) => {
   console.log(pageParam);
-  return axios.get(`http://localhost:4000/음식?_limit=1&_page=${pageParam}`);
+  return await axios.get(
+    `http://localhost:4000/food?_limit=1&_page=${pageParam}`
+  );
 };
 export default function InfinityQueryPage() {
   const {
@@ -19,11 +21,16 @@ export default function InfinityQueryPage() {
     isFetching,
     isFetchingNextPage,
   } = useInfiniteQuery({
-    queryKey: ["음식"],
-    queryFn: ({ pageParam = 1 }) => fetchFood(pageParam),
+    queryKey: ["food"],
+    queryFn: fetchFood,
     initialPageParam: 0,
     getNextPageParam: (_lastPage, pages) => {
-      if (pages.length < 4) {
+      if (
+        pages &&
+        Array.isArray(pages) &&
+        pages.length > 0 &&
+        pages.length < 4
+      ) {
         return pages.length + 1;
       } else {
         return undefined;
@@ -42,10 +49,10 @@ export default function InfinityQueryPage() {
     console.log(group);
     return (
       <Fragment key={i}>
-        {group.data.map((음식) => (
-          <div key={음식.id}>
-            <FoodName>Name: {음식.name}</FoodName>
-            <FoodCategory>Category: {음식.category}</FoodCategory>
+        {group.data.map((food) => (
+          <div key={food.id}>
+            <FoodName>Name: {food.name}</FoodName>
+            <FoodCategory>Category: {food.category}</FoodCategory>
           </div>
         ))}
       </Fragment>

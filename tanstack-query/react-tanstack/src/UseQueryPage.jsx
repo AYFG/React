@@ -6,14 +6,12 @@ import { Link } from "react-router-dom";
 
 export default function UseQueryPage() {
   const fetchFood = async ({ pageParam = 1 }) => {
-    const response = await axios.get(
-      `http://localhost:4000/음식?_limit=2&_page=${pageParam}}`
-    );
+    const response = await axios.get(`http://localhost:4000/food`);
     return response.data;
   };
 
   const { data, error, isLoading } = useQuery({
-    queryKey: ["음식"],
+    queryKey: ["food"],
     queryFn: fetchFood,
   });
 
@@ -26,16 +24,18 @@ export default function UseQueryPage() {
   }
 
   return (
-    <FoodContainer>
-      {data &&
-        data?.map((음식들) => (
-          <div>
-            <FoodName>Name: {음식들.name}</FoodName>
-            <FoodCategory>Category: {음식들.category}</FoodCategory>
-          </div>
-        ))}
+    <>
+      <FoodContainer>
+        {data &&
+          data?.map((음식들) => (
+            <div>
+              <FoodName>Name: {음식들.name}</FoodName>
+              <FoodCategory>Category: {음식들.category}</FoodCategory>
+            </div>
+          ))}
+      </FoodContainer>
       <Link to="/infinity">infinityQuery 페이지 이동</Link>
-    </FoodContainer>
+    </>
   );
 }
 const FoodContainer = styled.div`
