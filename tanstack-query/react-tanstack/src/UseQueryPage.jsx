@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 export default function UseQueryPage() {
-  const fetchFood = async ({ pageParam = 1 }) => {
+  const fetchFood = async () => {
     const response = await axios.get(`http://localhost:4000/food`);
     return response.data;
   };

@@ -45,19 +45,21 @@ export default function InfinityQueryPage() {
   if (isError) {
     return <div>Error : {error.message}</div>;
   }
-  const content = data?.pages.map((group, i) => {
-    console.log(group);
-    return (
-      <Fragment key={i}>
-        {group.data.map((food) => (
-          <div key={food.id}>
-            <FoodName>Name: {food.name}</FoodName>
-            <FoodCategory>Category: {food.category}</FoodCategory>
-          </div>
-        ))}
-      </Fragment>
-    );
-  });
+  const content =
+    data &&
+    data?.pages.map((group, i) => {
+      console.log(group);
+      return (
+        <Fragment key={i}>
+          {group.data.map((food) => (
+            <div key={food.id}>
+              <FoodName>Name: {food.name}</FoodName>
+              <FoodCategory>Category: {food.category}</FoodCategory>
+            </div>
+          ))}
+        </Fragment>
+      );
+    });
 
   return (
     <FoodContainer>
