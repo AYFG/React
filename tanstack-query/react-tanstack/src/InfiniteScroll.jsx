@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import React, { Fragment } from "react";
+import React, { Fragment, useRef } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
@@ -12,6 +12,8 @@ const fetchFood = async ({ pageParam = 1 }) => {
 };
 
 export default function InfinityQueryPage() {
+  const observerElem = useRef(null);
+
   const {
     isLoading,
     isError,
@@ -26,12 +28,7 @@ export default function InfinityQueryPage() {
     queryFn: fetchFood,
     initialPageParam: 0,
     getNextPageParam: (_lastPage, pages) => {
-      if (
-        pages &&
-        Array.isArray(pages) &&
-        pages.length > 0 &&
-        pages.length < 4
-      ) {
+      if (pages.length > 0 && pages.length < 4) {
         return pages.length + 1;
       } else {
         return undefined;
