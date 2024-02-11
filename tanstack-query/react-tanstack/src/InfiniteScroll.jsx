@@ -3,8 +3,11 @@ import React, { Fragment, useCallback, useEffect, useRef } from "react";
 import axios from "axios";
 import styled from "styled-components";
 
-const fetchFood = async ({ page = 1 }) => {
-  return await axios.get(`http://localhost:4000/food?_limit=5&_page=${page}`);
+const fetchFood = async ({ pageParam = 1 }) => {
+  console.log(`pageParam: ${pageParam}`);
+  return await axios.get(
+    `http://localhost:4000/food?_limit=1&_page=${pageParam}`
+  );
 };
 
 export default function InfinityQueryPage() {
@@ -13,12 +16,12 @@ export default function InfinityQueryPage() {
   const { isLoading, data, hasNextPage, fetchNextPage, isFetchingNextPage } =
     useInfiniteQuery({
       queryKey: ["food"],
-      queryFn: ({ pageParam = 1 }) => fetchFood(pageParam),
+      queryFn: fetchFood,
       initialPageParam: 1,
       getNextPageParam: (_lastPage, pages) => {
         if (pages.length < 10) {
           return pages.length + 1;
-        } else return undefined;
+        } else return null;
       },
     });
 
@@ -35,6 +38,7 @@ export default function InfinityQueryPage() {
 
   useEffect(() => {
     const element = observerElem.current;
+    console.log(observerElem);
 
     let options = {
       root: null,
@@ -56,6 +60,7 @@ export default function InfinityQueryPage() {
   const content =
     data &&
     data?.pages.map((group, i) => {
+      console.log(group);
       return (
         <Fragment key={i}>
           {group.data.map((food) => (
@@ -86,7 +91,7 @@ const FoodContainer = styled.div`
 `;
 const Box = styled.div`
   border: 1px solid black;
-  height: 30vh;
+  height: 100vh;
 `;
 const FoodName = styled.p``;
 const FoodCategory = styled.p``;

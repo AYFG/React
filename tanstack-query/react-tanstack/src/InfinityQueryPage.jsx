@@ -23,14 +23,14 @@ export default function InfinityQueryPage() {
     isFetchingNextPage,
   } = useInfiniteQuery({
     queryKey: ["food"],
-    queryFn: fetchFood,
-    initialPageParam: 0,
+    queryFn: ({ pageParam = 1 }) => fetchFood(pageParam),
+    initialPageParam: 1,
     getNextPageParam: (_lastPage, pages) => {
       if (
         pages &&
         Array.isArray(pages) &&
         pages.length > 0 &&
-        pages.length < 4
+        pages.length < 30
       ) {
         return pages.length + 1;
       } else {
