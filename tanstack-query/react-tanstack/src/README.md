@@ -11,10 +11,6 @@ Intersection Observer API 사용<br/>
 
 사용 방법:
 
-1. 개발 서버 실행:
-   
-npm start
+1. 개발 서버 실행: npm start
 
-2. JSON 데이터 서버 실행:
-
-npm run serve-json
+2. JSON 데이터 서버 실행: npm run serve-json
