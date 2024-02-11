@@ -1,58 +1,68 @@
-/* eslint-disable */
 import { useInfiniteQuery } from "@tanstack/react-query";
-import React, { Fragment, useRef } from "react";
+import React, { Fragment, useCallback, useEffect, useRef } from "react";
 import axios from "axios";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
 
-const fetchFood = async ({ pageParam }) => {
-  console.log(pageParam);
-  return await axios.get(
-    `http://localhost:4000/food?_limit=1&_page=${pageParam}`
-  );
+const fetchFood = async ({ page = 1 }) => {
+  return await axios.get(`http://localhost:4000/food?_limit=5&_page=${page}`);
 };
 
 export default function InfinityQueryPage() {
-  // const observer = new IntersectionObserver();
-  // observer.observe;
   const observerElem = useRef(null);
 
-  const {
-    isLoading,
-    isError,
-    error,
-    data,
-    hasNextPage,
-    fetchNextPage,
-    isFetching,
-    isFetchingNextPage,
-  } = useInfiniteQuery({
-    queryKey: ["food"],
-    queryFn: fetchFood,
-    initialPageParam: 1,
-    getNextPageParam: (lastPage, allPages) => {
-      return allPages.length;
+  const { isLoading, data, hasNextPage, fetchNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: ["food"],
+      queryFn: ({ pageParam = 1 }) => fetchFood(pageParam),
+      initialPageParam: 1,
+      getNextPageParam: (_lastPage, pages) => {
+        if (pages.length < 10) {
+          return pages.length + 1;
+        } else return undefined;
+      },
+    });
+
+  const handleObserver = useCallback(
+    (entries) => {
+      const [target] = entries;
+      console.log(target);
+      if (target.isIntersecting && hasNextPage) {
+        fetchNextPage();
+      }
     },
-  });
+    [fetchNextPage, hasNextPage]
+  );
+
+  useEffect(() => {
+    const element = observerElem.current;
+
+    let options = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 1,
+    };
+
+    const observer = new IntersectionObserver(handleObserver, options);
+    if (element) observer.observe(element);
+    return () => {
+      if (element) observer.unobserve(element);
+    };
+  }, [fetchNextPage, hasNextPage, handleObserver]);
 
   if (isLoading) {
     return <div>Loading</div>;
   }
 
-  if (isError) {
-    return <div>Error : {error.message}</div>;
-  }
   const content =
     data &&
     data?.pages.map((group, i) => {
-      console.log(group);
       return (
         <Fragment key={i}>
           {group.data.map((food) => (
-            <div key={food.id}>
+            <Box key={food.id}>
               <FoodName>Name: {food.name}</FoodName>
               <FoodCategory>Category: {food.category}</FoodCategory>
-            </div>
+            </Box>
           ))}
         </Fragment>
       );
@@ -60,12 +70,10 @@ export default function InfinityQueryPage() {
 
   return (
     <FoodContainer>
-      <Link to="/">뒤로</Link>
       {content}
-      <NextFood disabled={!hasNextPage} onClick={fetchNextPage}>
-        다음 음식 불러오기
-      </NextFood>
-      <div>{isFetching && !isFetchingNextPage ? "fetching..." : null}</div>
+      <div className="loader" ref={observerElem}>
+        {isFetchingNextPage && hasNextPage ? "Loading..." : "No search left"}
+      </div>
     </FoodContainer>
   );
 }
@@ -76,6 +84,9 @@ const FoodContainer = styled.div`
   align-items: center;
   flex-direction: column;
 `;
+const Box = styled.div`
+  border: 1px solid black;
+  height: 30vh;
+`;
 const FoodName = styled.p``;
 const FoodCategory = styled.p``;
-const NextFood = styled.button``;
