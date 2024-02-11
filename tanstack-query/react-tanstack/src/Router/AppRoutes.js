@@ -3,7 +3,6 @@ import { Route, Routes } from "react-router-dom";
 import UseQueryPage from "../UseQueryPage";
 import InfinityQueryPage from "../InfinityQueryPage";
 import InfiniteScroll from "../InfiniteScroll";
-import InterObserver from "../InterObserver";
 
 export default function AppRoutes() {
   return (

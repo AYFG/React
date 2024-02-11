@@ -1,10 +1,11 @@
+/* eslint-disable */
 import { useInfiniteQuery } from "@tanstack/react-query";
 import React, { Fragment, useRef } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-const fetchFood = async ({ pageParam = 1 }) => {
+const fetchFood = async ({ pageParam }) => {
   console.log(pageParam);
   return await axios.get(
     `http://localhost:4000/food?_limit=1&_page=${pageParam}`
@@ -12,6 +13,8 @@ const fetchFood = async ({ pageParam = 1 }) => {
 };
 
 export default function InfinityQueryPage() {
+  // const observer = new IntersectionObserver();
+  // observer.observe;
   const observerElem = useRef(null);
 
   const {
@@ -26,13 +29,9 @@ export default function InfinityQueryPage() {
   } = useInfiniteQuery({
     queryKey: ["food"],
     queryFn: fetchFood,
-    initialPageParam: 0,
-    getNextPageParam: (_lastPage, pages) => {
-      if (pages.length > 0 && pages.length < 4) {
-        return pages.length + 1;
-      } else {
-        return undefined;
-      }
+    initialPageParam: 1,
+    getNextPageParam: (lastPage, allPages) => {
+      return allPages.length;
     },
   });
 
