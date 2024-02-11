@@ -3,10 +3,10 @@
 
 연습 내용:
 
-useInfiniteQuery 훅 사용
-getNextPageParam 함수 사용
-Intersection Observer API 사용
-데이터 렌더링 및 페이지네이션 처리
+useInfiniteQuery 훅 사용<br/>
+getNextPageParam 함수 사용<br/>
+Intersection Observer API 사용<br/>
+데이터 렌더링 및 페이지네이션 처리<br/>
 
 
 사용 방법:
