@@ -1,8 +1,12 @@
+import Link from "next/link";
+
 export default function Home() {
   let name = "woong";
-  let link = "http://google.com";
+  let link = "/list";
+
   return (
     <div>
+      <div></div>
       <h4 className="title" style={{ color: "red", fontSize: "30px" }}>
         쥬시후레시
       </h4>
