@@ -1,15 +1,21 @@
 export default function List() {
+  let 상품 = ["Tomatoes", "Pasta", "Coconut"];
+  let 가격 = [20, 30, 40];
   let link = "/list/def";
   return (
     <div>
       <h4 className="title">상품목록</h4>
-      <div className="food">
-        <h4>상품1 $40</h4>
-      </div>
-      <div className="food">
-        <h4>상품2 $40</h4>
-        <a href={link}>링크</a>
-      </div>
+      {상품.map((a, i) => {
+        return (
+          <div className="food" key={i}>
+            <a href={link}>
+              <h4>
+                {a} ${가격[i]}
+              </h4>
+            </a>
+          </div>
+        );
+      })}
     </div>
   );
 }
