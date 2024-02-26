@@ -3,6 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 // usePathname은 client 안에서만 사용할 수 있다.
 import "./style.css";
+import { useState } from "react";
 const navLinks = [
   { name: "Register", href: "/register" },
   { name: "Login", href: "/login" },
@@ -15,8 +16,13 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   const pathName = usePathname();
+  const [input, setInput] = useState("");
   return (
     <div>
+      <div>
+        <input value={input} onChange={(e) => setInput(e.target.value)} />
+      </div>
+
       {navLinks.map((link) => {
         const isActive = pathName.startsWith(link.href);
         return (
