@@ -1,3 +1,4 @@
+// layout과 template의 차이는 layout은 라우트 간에 상태를 유지하고 네비게이션 동안 재렌더링이 되지 않는다. template.tsx는 상태를 유지하지 않고 네비게이션 시 새로운 인스턴스가 마운트 된다.
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
