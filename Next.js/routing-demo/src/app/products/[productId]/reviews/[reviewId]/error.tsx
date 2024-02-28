@@ -15,3 +15,4 @@ export default function ErrorBoundary({
 }
 // error.tsx의 장점 : 에러가 생긴 컴포넌트만 격리되고 나머지는 기능이 된다.전체 페이지를 다시 로드하지 않고 오류에서 복구를 시도하는 기능을 추가할 수 있다.
 // error.tsx의 오류 복구 방법 : page.tsx가 클라이언트 컴포넌트이어야 하고,reset 매개변수를 이용해 오류 상태 벗어나기
+// error.tsx 파일은 중첩된 모든 하위 세그먼트(폴더)에 대한 오류를 처리한다.
