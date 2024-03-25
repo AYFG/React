@@ -1,19 +1,12 @@
 "use client";
 import { useState } from "react";
-import type { RootState } from "../../store";
-import { useDispatch, useSelector } from "react-redux";
-import { setUserType } from "@/userTypeSlice";
-
+import UserTypeButton from "./components/userTypeButton";
 export default function signUp() {
   const [userId, setUserId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPw, setConfirmPw] = useState<string>("");
   const [userName, setUserName] = useState<string>("");
   const [userPhoneNum, setUserPhoneNum] = useState<string>("");
-  const userType = useSelector((state: RootState) => state.userType);
-
-  const dispatch = useDispatch();
-
   const handleInputId = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserId(e.target.value);
     console.log(e.target.value);
@@ -38,7 +31,8 @@ export default function signUp() {
     setUserPhoneNum(e.target.value);
     console.log(e.target.value);
   };
-  const handleSubmit = () => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     const joinData = {
       userId: userId,
       password: password,
@@ -47,38 +41,14 @@ export default function signUp() {
       name: userName,
     };
   };
-  const userTypeBtn = () => {
-    console.log(userType);
-    if (userType === "SELLER") {
-      ("bg-blue-500 text-white");
-    } else if (userType === "BUYER") {
-      ("bg-blue-500 text-white");
-    } else {
-      ("bg-white");
-    }
-  };
+
   return (
     <form
       onSubmit={handleSubmit}
       className="flex flex-col p-4 max-w-sm mx-auto mt-10 bg-white shadow-lg rounded-lg"
     >
-      <div>
-        <button
-          id="SELLER"
-          onClick={() => dispatch(setUserType("SELLER"))}
-          className={`${userTypeBtn()}border m-6 px-4 py-2 rounded-lg `}
-        >
-          구매회원 로그인
-        </button>
-        <button
-          id="BUYER"
-          onClick={() => dispatch(setUserType("BUYER"))}
-          className={`${userTypeBtn()}border m-6 px-4 py-2 rounded-lg `}
-        >
-          판매회원 로그인
-        </button>
-      </div>
       <h2 className="text-center text-xl mb-6">회원가입</h2>
+      <UserTypeButton sellerButtonText="구매회원" buyerButtonText="판매회원" />
       <label
         htmlFor="userIdInput"
         className="mb-2 text-sm font-medium text-gray-900"

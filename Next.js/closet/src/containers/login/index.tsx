@@ -2,6 +2,7 @@
 import axios from "axios";
 import Link from "next/link";
 import { useState } from "react";
+import UserTypeButton from "../signup/components/userTypeButton";
 
 export default function Login() {
   const handleSubmit = async (
@@ -40,6 +41,10 @@ export default function Login() {
         <span className="block text-xl mb-4 font-semibold text-gray-800">
           Login
         </span>
+        <UserTypeButton
+          sellerButtonText="구매회원 로그인"
+          buyerButtonText="판매회원 로그인"
+        />
         <label
           htmlFor="loginId"
           className="mb-2 text-sm font-medium text-gray-900"
