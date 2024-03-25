@@ -3,7 +3,7 @@ import axios from "axios";
 import Link from "next/link";
 import { useState } from "react";
 
-export default function page() {
+export default function Login() {
   const handleSubmit = async (
     event: React.FormEvent<HTMLFormElement>
   ): Promise<void> => {
