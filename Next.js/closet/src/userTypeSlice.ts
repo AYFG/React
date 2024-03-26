@@ -2,11 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 export interface userTypeState {
-  userType: string;
+  value: string;
 }
 
 const initialState: userTypeState = {
-  userType: "SELLER",
+  value: "SELLER",
 };
 
 const userSlice = createSlice({
@@ -14,8 +14,7 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     setUserType: (state: userTypeState, action: PayloadAction<string>) => {
-      state.userType = action.payload;
-      console.log(state);
+      state.value = action.payload;
     },
   },
 });

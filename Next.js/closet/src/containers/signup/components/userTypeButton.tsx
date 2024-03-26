@@ -13,7 +13,7 @@ export default function UserTypeButton({
   sellerButtonText,
   buyerButtonText,
 }: UserTypeButtonProps) {
-  const userType = useSelector((state: RootState) => state.userType.userType);
+  const userType = useSelector((state: RootState) => state.userType.value);
   const dispatch = useDispatch();
   const SellerBtn = () => {
     if (userType === "SELLER") {
