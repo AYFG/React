@@ -5,15 +5,14 @@ import {
   MessageOutlined,
   RetweetOutlined,
 } from "@ant-design/icons";
-import { Avatar, Button, Card, Image, Popover } from "antd";
-import { Content } from "antd/lib/layout/layout";
+import { Avatar, Button, Card, Comment, List, Popover } from "antd";
 import React, { useCallback, useState } from "react";
-import { CommentForm } from "./CommentForm";
+import CommentForm from "./CommentForm";
 import ButtonGroup from "antd/lib/button/button-group";
 import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
-import { Comments } from "./Comments";
 import PostImages from "./PostImages";
+import PostCardContent from "./PostCardContent";
 
 export const PostCard = ({ post }) => {
   const [liked, setLiked] = useState(false);
@@ -68,12 +67,28 @@ export const PostCard = ({ post }) => {
         <Card.Meta
           avatar={<Avatar>{post.User.nickname[0]}</Avatar>}
           title={post.User.nickname}
-          description={post.content}
+          description={<PostCardContent postData={post.content} />}
         />
       </Card>
-      {commentFormOpened && <div>댓글 부분</div>}
-      <CommentForm />
-      <Comments />
+      {commentFormOpened && (
+        <div>
+          <CommentForm post={post} />
+          <List
+            header={`${post.Comments.length}개의 댓글`}
+            itemLayout="horizontal"
+            dataSource={post.Comments}
+            renderItem={(item) => (
+              <li>
+                <Comment
+                  author={item.User.nickname}
+                  avatar={<Avatar>{item.User.nickname[0]}</Avatar>}
+                  content={item.content}
+                />
+              </li>
+            )}
+          />
+        </div>
+      )}
     </div>
   );
 };

@@ -12,13 +12,13 @@ export const initialState = {
           src: "https://loremflickr.com/640/360",
         },
         {
-          src: "https://loremflickr.com/640/360",
+          src: "https://picsum.photos/200",
         },
         {
-          src: "https://loremflickr.com/640/360",
+          src: "https://picsum.photos/200/300",
         },
       ],
-      Comment: [
+      Comments: [
         {
           User: {
             nickname: "nero",
