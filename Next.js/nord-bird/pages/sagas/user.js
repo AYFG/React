@@ -1,14 +1,15 @@
 import axios from "axios";
-import { all, takeLatest } from "redux-saga/effects";
+import { all, delay, fork, put, takeLatest } from "redux-saga/effects";
 import {
   LOG_IN_REQUEST,
   LOG_IN_SUCCESS,
-  LOG_IN_ERROR,
+  LOG_IN_FAILURE,
   LOG_OUT_FAILURE,
   LOG_OUT_REQUEST,
   LOG_OUT_SUCCESS,
   SIGN_UP_SUCCESS,
-  SIGN_UP_ERROR,
+  SIGN_UP_FAILURE,
+  SIGN_UP_REQUEST,
 } from "../reducer/user";
 
 function loginAPI(data) {
@@ -24,7 +25,7 @@ function* login(action) {
     });
   } catch (err) {
     yield put({
-      type: LOG_OUT_FAILURE,
+      type: LOG_IN_FAILURE,
       data: err.response.data,
     });
   }
@@ -39,7 +40,6 @@ function* logOut() {
     yield delay(1000);
     yield put({
       type: LOG_OUT_SUCCESS,
-      data: action.data,
     });
   } catch (err) {
     yield put({
@@ -61,7 +61,7 @@ function* signup() {
     });
   } catch (err) {
     yield put({
-      type: SIGN_UP_ERROR,
+      type: SIGN_UP_FAILURE,
       data: err.response.data,
     });
   }
@@ -75,7 +75,7 @@ function* watchLogOut() {
   yield takeLatest(LOG_OUT_REQUEST, logOut);
 }
 function* watchSignUp() {
-  yield takeLatest(SIGN_OUT_REQUEST, signup);
+  yield takeLatest(SIGN_UP_REQUEST, signup);
 }
 
 export default function* userSaga() {

@@ -3,12 +3,15 @@ export const initialState = {
     logInLoading: false, // 로그인 시도중
     logInDone: false,
     logInError: null,
-    logOutLoading: false, //로그아웃 시도중
+    logOutLoading: false, // 로그아웃 시도중
     logOutDone: false,
     logOutError: false,
     signUpLoading: false, // 회원가입 시도중
     signUpDone: false,
     signUpERROR: null,
+    changeNicknameLoading: false, // 닉네임 변경 시도중
+    changeNicknameDone: false,
+    changeNicknameERROR: null,
     me: null,
     signUpData: {},
     loginData: {},
@@ -17,23 +20,27 @@ export const initialState = {
 
 export const LOG_IN_REQUEST = "LOG_IN_REQUEST";
 export const LOG_IN_SUCCESS = "LOG_IN_SUCCESS";
-export const LOG_IN_ERROR = "LOG_IN_ERROR";
+export const LOG_IN_FAILURE = "LOG_IN_FAILURE";
 
 export const LOG_OUT_REQUEST = "LOG_OUT_REQUEST";
 export const LOG_OUT_SUCCESS = "LOG_OUT_SUCCESS";
-export const LOG_OUT_ERROR = "LOG_OUT_ERROR";
+export const LOG_OUT_FAILURE = "LOG_OUT_FAILURE";
 
 export const SIGN_UP_REQUEST = "SIGN_UP_REQUEST";
 export const SIGN_UP_SUCCESS = "SIGN_UP_SUCCESS";
-export const SIGN_UP_ERROR = "SIGN_UP_ERROR";
+export const SIGN_UP_FAILURE = "SIGN_UP_FAILURE";
+
+export const CHANGE_NICKNAME_REQUEST = "CHANGE_NICKNAME_REQUEST";
+export const CHANGE_NICKNAME_SUCCESS = "CHANGE_NICKNAME_SUCCESS";
+export const CHANGE_NICKNAME_FAILURE = "CHANGE_NICKNAME_FAILURE";
 
 export const FOLLOW_REQUEST = "FOLLOW_REQUEST";
 export const FOLLOW_SUCCESS = "FOLLOW_SUCCESS";
-export const FOLLOW_ERROR = "FOLLOW_ERROR";
+export const FOLLOW_FAILURE = "FOLLOW_FAILURE";
 
 export const UNFOLLOW_REQUEST = "UNFOLLOW_REQUEST";
 export const UNFOLLOW_SUCCESS = "UNFOLLOW_SUCCESS";
-export const UNFOLLOW_ERROR = "UNFOLLOW_ERROR";
+export const UNFOLLOW_FAILURE = "UNFOLLOW_FAILURE";
 
 const dummyUser = (data) => ({
   ...data,
@@ -51,11 +58,7 @@ export const loginRequestAction = (data) => {
   };
 };
 
-export const logoutRequestAction = (data) => {
-  return {
-    type: LOG_OUT_REQUEST,
-  };
-};
+export const logoutRequestAction = () => {return {type: LOG_OUT_REQUEST,};};
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -73,7 +76,7 @@ const reducer = (state = initialState, action) => {
         logInDone: true,
         me: dummyUser(action.data),
       };
-    case LOG_IN_ERROR:
+    case LOG_IN_FAILURE:
       return {
         ...state,
         logInLoading: false,
@@ -93,7 +96,7 @@ const reducer = (state = initialState, action) => {
         logOutDone: true,
         me: null,
       };
-    case LOG_OUT_ERROR:
+    case LOG_OUT_FAILURE:
       return {
         ...state,
         logOutLoading: false,
@@ -113,11 +116,31 @@ const reducer = (state = initialState, action) => {
         signupDone: true,
         me: null,
       };
-    case SIGN_UP_ERROR:
+    case SIGN_UP_FAILURE:
       return {
         ...state,
         signupLoading: false,
         signupError: action.error,
+      };
+    case CHANGE_NICKNAME_REQUEST:
+      return {
+        ...state,
+        changeNicknameLoading: true,
+        changeNicknameDong: false,
+        changeNicknameError: null,
+      };
+    case CHANGE_NICKNAME_SUCCESS:
+      return {
+        ...state,
+        changeNicknameLoading: false,
+        changeNicknameDone: true,
+        me: null,
+      };
+    case CHANGE_NICKNAME_FAILURE:
+      return {
+        ...state,
+        changeNicknameLoading: false,
+        changeNicknameError: action.error,
       };
 
     default:
