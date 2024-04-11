@@ -14,6 +14,7 @@ import PropTypes from "prop-types";
 import PostImages from "./PostImages";
 import PostCardContent from "./PostCardContent";
 import { REMOVE_POST_REQUEST } from "../reducer/post";
+import FollowButton from "./FollowButton";
 
 export const PostCard = ({ post }) => {
   const dispatch = useDispatch();
@@ -79,6 +80,7 @@ export const PostCard = ({ post }) => {
             <EllipsisOutlined />
           </Popover>,
         ]}
+        extra={id && <FollowButton post={post} />}
       >
         <Card.Meta
           avatar={<Avatar>{post.User.nickname[0]}</Avatar>}
