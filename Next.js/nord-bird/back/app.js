@@ -7,6 +7,7 @@
 // app.head -> 헤더만 가져오기(헤더/바디)
 
 const express = require("express");
+const cors = require("cors");
 const postRouter = require("./routes/post");
 const userRouter = require("./routes/user");
 const db = require("./models");
@@ -19,8 +20,17 @@ db.sequelize
   })
   .catch(console.error);
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(
+  cors({
+    // origin: "https://nodebird.com",
+    origin: "*",
+    Credentials: false,
+  })
+);
 
 app.get("/", (req, res) => {
   res.send("hello express");
