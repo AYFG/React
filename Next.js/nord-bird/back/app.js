@@ -28,7 +28,7 @@ app.use(
   cors({
     // origin: "https://nodebird.com",
     origin: "*",
-    Credentials: false,
+    credentials: false,
   })
 );
 
