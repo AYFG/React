@@ -6,7 +6,7 @@ import AppLayout from "./components/AppLayout";
 import { Button, Checkbox, Form, Input } from "antd";
 import useInput from "./hooks/useInput";
 import { SIGN_UP_REQUEST } from "./reducer/user";
-import { Router } from "next/router";
+import { useRouter } from "next/router";
 
 const ErrorMessage = styled.div`
   color: red;
@@ -14,13 +14,14 @@ const ErrorMessage = styled.div`
 
 const Signup = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
   const { signUpLoading, signUpDone, signUpError } = useSelector(
     (state) => state.user
   );
 
   useEffect(() => {
     if (signUpDone) {
-      Router.push("/");
+      router.push("/");
     }
   }, [signUpDone]);
 

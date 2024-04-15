@@ -15,7 +15,7 @@ export const initialState = {
     logOutError: false,
     signUpLoading: false, // 회원가입 시도중
     signUpDone: false,
-    signUpERROR: null,
+    signUpError: null,
     changeNicknameLoading: false, // 닉네임 변경 시도중
     changeNicknameDone: false,
     changeNicknameERROR: null,
@@ -118,7 +118,7 @@ const reducer = (state = initialState, action) =>
       case LOG_IN_SUCCESS:
         draft.logInLoading = false;
         draft.logInDone = true;
-        draft.me = dummyUser(action.data);
+        draft.me = action.data;
         break;
 
       case LOG_IN_FAILURE:

@@ -18,16 +18,16 @@ import {
   UNFOLLOW_FAILURE,
 } from "../reducer/user";
 
-function loginAPI(data) {
-  return axios.post("/api/login", data);
+function logInAPI(data) {
+  return axios.post("/login", data);
 }
 
 function* login(action) {
   try {
-    yield delay(1000);
+    const result = yield call(logInAPI, action.data);
     yield put({
       type: LOG_IN_SUCCESS,
-      data: action.data,
+      data: result.data,
     });
   } catch (err) {
     yield put({
@@ -38,7 +38,7 @@ function* login(action) {
 }
 
 function logOutAPI() {
-  return axios.post("/api/logout");
+  return axios.post("/logout");
 }
 
 function* logOut() {
@@ -56,7 +56,7 @@ function* logOut() {
 }
 
 function signupAPI(data) {
-  return axios.post("http://localhost:3065/user", data);
+  return axios.post("/user", data);
 }
 
 function* signup(action) {
