@@ -60,7 +60,7 @@ export const PostCard = ({ post }) => {
             key="more"
             content={
               <ButtonGroup>
-                {id && post.User.id === id ? (
+                {id && post.User?.id === id ? (
                   <>
                     <Button>수정</Button>
                     <Button
@@ -83,8 +83,8 @@ export const PostCard = ({ post }) => {
         extra={id && <FollowButton post={post} />}
       >
         <Card.Meta
-          avatar={<Avatar>{post.User.nickname[0]}</Avatar>}
-          title={post.User.nickname}
+          avatar={<Avatar>{post.User?.nickname[0]}</Avatar>}
+          title={post.User?.nickname}
           description={<PostCardContent postData={post.content} />}
         />
       </Card>
@@ -116,7 +116,7 @@ PostCard.propTypes = {
     User: PropTypes.object,
     UserId: PropTypes.number,
     content: PropTypes.string,
-    createdAt: PropTypes.object,
+    createdAt: PropTypes.string,
     Comments: PropTypes.arrayOf(PropTypes.any),
     Images: PropTypes.arrayOf(PropTypes.any),
   }).isRequired,

@@ -16,10 +16,32 @@ import {
   UNFOLLOW_REQUEST,
   UNFOLLOW_SUCCESS,
   UNFOLLOW_FAILURE,
+  LOAD_USER_REQUEST,
+  LOAD_USER_SUCCESS,
+  LOAD_USER_FAILURE,
 } from "../reducer/user";
 
+function loadUserAPI() {
+  return axios.get("/user");
+}
+
+function* loadUser(action) {
+  try {
+    const result = yield call(loadUserAPI, action.data);
+    yield put({
+      type: LOAD_USER_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: LOAD_USER_FAILURE,
+      data: err.response.data,
+    });
+  }
+}
 function logInAPI(data) {
-  return axios.post("/login", data);
+  return axios.post("/user/login", data);
 }
 
 function* login(action) {
@@ -38,12 +60,12 @@ function* login(action) {
 }
 
 function logOutAPI() {
-  return axios.post("/logout");
+  return axios.post("/user/logout");
 }
 
 function* logOut() {
   try {
-    yield delay(1000);
+    yield call(logOutAPI);
     yield put({
       type: LOG_OUT_SUCCESS,
     });
@@ -74,7 +96,7 @@ function* signup(action) {
   }
 }
 function followAPI() {
-  return axios.post("/api/follow");
+  return axios.post("/follow");
 }
 
 function* follow(action) {
@@ -92,7 +114,7 @@ function* follow(action) {
   }
 }
 function unfollowAPI() {
-  return axios.post("/api/unfollow");
+  return axios.post("/unfollow");
 }
 
 function* unfollow(action) {
@@ -110,6 +132,9 @@ function* unfollow(action) {
   }
 }
 
+function* watchLoadUser() {
+  yield takeLatest(LOAD_USER_REQUEST, loadUser);
+}
 function* watchFollow() {
   yield takeLatest(FOLLOW_REQUEST, follow);
 }
@@ -129,6 +154,7 @@ function* watchSignUp() {
 
 export default function* userSaga() {
   yield all([
+    fork(watchLoadUser),
     fork(watchFollow),
     fork(watchUnfollow),
     fork(watchLogin),
