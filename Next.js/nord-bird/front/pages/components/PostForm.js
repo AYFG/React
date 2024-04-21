@@ -17,7 +17,7 @@ export const PostForm = () => {
   }, [addPostDone]);
 
   const onSubmit = useCallback(() => {
-    dispatch(addPost(text));
+    dispatch(addPost({ content: text }));
   }, [text]);
 
   const imageInput = useRef();

@@ -48,7 +48,7 @@ export const PostCard = ({ post }) => {
       data: post.id,
     });
   }, []);
-  const id = useSelector((state) => state.me?.id);
+  const id = useSelector((state) => state.user.me?.id);
   const liked = post.Likers.find((v) => v.id === id);
   return (
     <div style={{ marginBottom: 20 }}>
@@ -72,7 +72,7 @@ export const PostCard = ({ post }) => {
             key="more"
             content={
               <ButtonGroup>
-                {id && post.User?.id === id ? (
+                {id && post.User.id === id ? (
                   <>
                     <Button>수정</Button>
                     <Button
@@ -95,8 +95,8 @@ export const PostCard = ({ post }) => {
         extra={id && <FollowButton post={post} />}
       >
         <Card.Meta
-          avatar={<Avatar>{post.User?.nickname[0]}</Avatar>}
-          title={post.User?.nickname}
+          avatar={<Avatar>{post.User.nickname[0]}</Avatar>}
+          title={post.User.nickname}
           description={<PostCardContent postData={post.content} />}
         />
       </Card>

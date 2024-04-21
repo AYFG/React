@@ -94,6 +94,7 @@ function* addPost(action) {
       data: result.data.id,
     });
   } catch (err) {
+    console.log(err);
     yield put({
       type: ADD_POST_FAILURE,
       data: err.response.data,
@@ -102,7 +103,7 @@ function* addPost(action) {
 }
 
 function removePostAPI(data) {
-  return axios.delete("/post", data);
+  return axios.delete(`/post/${data}`, data);
 }
 
 function* removePost(action) {
