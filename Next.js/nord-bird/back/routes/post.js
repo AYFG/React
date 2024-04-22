@@ -14,12 +14,41 @@ try {
   fs.mkdirSync("uploads");
 }
 
-router.post("/", isLoggedIn, async (req, res, next) => {
+const upload = multer({
+  storage: multer.diskStorage({
+    destination(req, file, done) {
+      // uploads 폴더에 이미지를 두겠다.
+      done(null, "uploads");
+    },
+    filename(req, file, done) {
+      // test.png
+      const ext = path.extname(file.originalname); //확장자 추출(.png)
+      const basename = path.basename(file.originalname, ext); // test
+      done(null, basename + "_" + new Date().getTime() + ext); // test151717281.png
+    },
+  }),
+  limits: { fileSize: 20 * 1024 * 1024 }, // 20MB
+});
+router.post("/", isLoggedIn, upload.none(), async (req, res, next) => {
   try {
     const post = await Post.create({
       content: req.body.content,
       UserId: req.user.id,
     });
+    if (req.body.image) {
+      if (Array.isArray(req.body.image)) {
+        // 이미지를 여러 개 올리면 image: [test1.png, test2.png]
+        const images = await Promise.all(
+          req.body.image.map((image) => Image.create({ src: image }))
+        );
+        // test1.png promise , test2.png promise (db는 파일을 저장하지 않고 접근할 주소만 가진다.)
+        await post.addImages(images);
+      } else {
+        // 이미지를 하나만 올리면 image: test.png (배열로 안감싸진다.)
+        const image = await Image.create({ src: req.body.image });
+        await post.addImages(image);
+      }
+    }
     const fullPost = await Post.findOne({
       where: { id: post.id },
       include: [
@@ -53,21 +82,6 @@ router.post("/", isLoggedIn, async (req, res, next) => {
   }
 });
 
-const upload = multer({
-  storage: multer.diskStorage({
-    destination(req, file, done) {
-      // uploads 폴더에 이미지를 두겠다.
-      done(null, "uploads");
-    },
-    filename(req, file, done) {
-      // test.png
-      const ext = path.extname(file.originalname); //확장자 추출(.png)
-      const basename = path.basename(file.originalname, ext); // test
-      done(null, basename + new Date().getTime() + ext); // test151717281.png
-    },
-  }),
-  limits: { fileSize: 20 * 1024 * 1024 }, // 20MB
-});
 router.post(
   "/images",
   isLoggedIn,
