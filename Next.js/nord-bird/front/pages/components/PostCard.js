@@ -23,17 +23,9 @@ import FollowButton from "./FollowButton";
 
 export const PostCard = ({ post }) => {
   const dispatch = useDispatch();
-  const { removePostLoading, retweetError } = useSelector(
-    (state) => state.post
-  );
+  const { removePostLoading } = useSelector((state) => state.post);
   const [commentFormOpened, setCommentFormOpened] = useState(false);
   const id = useSelector((state) => state.user.me?.id);
-
-  // useEffect(() => {
-  //   if (retweetError) {
-  //     alert(retweetError);
-  //   }
-  // }, [retweetError]);
 
   const onUnlike = useCallback(() => {
     if (!id) {
