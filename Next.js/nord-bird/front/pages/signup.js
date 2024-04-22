@@ -19,7 +19,7 @@ const Signup = () => {
     (state) => state.user
   );
   useEffect(() => {
-    if (!(me && me.id)) {
+    if (me && me.id) {
       router.replace("/");
     }
   }, [me && me.id]);
