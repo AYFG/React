@@ -5,6 +5,8 @@ import { PostForm } from "./components/PostForm";
 import { PostCard } from "./components/PostCard";
 import { LOAD_POSTS_REQUEST } from "./reducer/post";
 import { LOAD_USER_REQUEST } from "./reducer/user";
+import wrapper from "../pages/store/configureStore";
+import { END } from "redux-saga";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -18,16 +20,16 @@ const Home = () => {
     }
   }, [retweetError]);
 
-  useEffect(() => {
-    dispatch({
-      type: LOAD_USER_REQUEST,
-    });
-  }, []);
-  useEffect(() => {
-    dispatch({
-      type: LOAD_POSTS_REQUEST,
-    });
-  }, []);
+  // useEffect(() => {
+  //   dispatch({
+  //     type: LOAD_USER_REQUEST,
+  //   });
+  // }, []);
+  // useEffect(() => {
+  //   dispatch({
+  //     type: LOAD_POSTS_REQUEST,
+  //   });
+  // }, []);
 
   useEffect(() => {
     function onScroll() {
@@ -59,5 +61,20 @@ const Home = () => {
     </AppLayout>
   );
 };
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  async (context) => {
+    console.log(context);
+    context.store.dispatch({
+      type: LOAD_USER_REQUEST,
+    });
+    context.store.dispatch({
+      type: LOAD_POSTS_REQUEST,
+    });
+    // REQUEST가 SUCCESS가 될 때까지 기다리게 해준다.
+    context.store.dispatch(END);
+    await context.store.sagaTask.toPromise();
+  }
+);
 
 export default Home;
