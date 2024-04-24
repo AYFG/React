@@ -8,6 +8,8 @@ const { isLoggedIn, isNotLoggedIn } = require("./middlewares");
 const router = express.Router();
 
 router.get("/", async (req, res, next) => {
+  // GET /user
+  console.log(req.headers); // SSR 때 헤더 안에 쿠키가 들어있는지 확인하기
   try {
     if (req.user) {
       const fullUserWithoutPassword = await User.findOne({

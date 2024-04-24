@@ -26,8 +26,8 @@ const configureStore = (context) => {
   return store;
 };
 
-const Wrapper = createWrapper(configureStore, {
+const wrapper = createWrapper(configureStore, {
   debug: process.env.NODE_ENV === "development",
 });
 
-export default Wrapper;
+export default wrapper;

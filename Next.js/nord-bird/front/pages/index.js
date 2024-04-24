@@ -4,9 +4,10 @@ import AppLayout from "./components/AppLayout";
 import { PostForm } from "./components/PostForm";
 import { PostCard } from "./components/PostCard";
 import { LOAD_POSTS_REQUEST } from "./reducer/post";
-import { LOAD_USER_REQUEST } from "./reducer/user";
+import { LOAD_MY_INFO_REQUEST, LOAD_USER_REQUEST } from "./reducer/user";
 import wrapper from "../pages/store/configureStore";
 import { END } from "redux-saga";
+import axios from "axios";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -64,15 +65,21 @@ const Home = () => {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   async (context) => {
-    console.log(context);
+    console.log("getServerSideProps start");
+    console.log(context.req.headers);
+    const cookie = context.req ? context.req.headers.cookie : "";
+    axios.defaults.headers.Cookie = "";
+    if (context.req && cookie) {
+      axios.defaults.headers.Cookie = cookie;
+    }
     context.store.dispatch({
-      type: LOAD_USER_REQUEST,
+      type: LOAD_MY_INFO_REQUEST,
     });
     context.store.dispatch({
       type: LOAD_POSTS_REQUEST,
     });
-    // REQUEST가 SUCCESS가 될 때까지 기다리게 해준다.
     context.store.dispatch(END);
+    console.log("getServerSideProps end");
     await context.store.sagaTask.toPromise();
   }
 );
