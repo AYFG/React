@@ -44,6 +44,47 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+// 특정 사용자 정보 GET
+router.get("/:userId", async (req, res, next) => {
+  // GET /user/1
+  console.log(req.headers); // SSR 때 헤더 안에 쿠키가 들어있는지 확인하기
+  try {
+    const fullUserWithoutPassword = await User.findOne({
+      where: { id: req.params.userId },
+      attributes: {
+        exclude: ["password"],
+      },
+      include: [
+        {
+          model: Post,
+          attributes: ["id"],
+        },
+        {
+          model: User,
+          as: "Followings",
+          attributes: ["id"],
+        },
+        {
+          model: User,
+          as: "Followers",
+          attributes: ["id"],
+        },
+      ],
+    });
+    if (fullUserWithoutPassword) {
+      const data = fullUserWithoutPassword.toJSON();
+      data.Posts = data.Posts.length; // 개인정보 침해 예방
+      data.Followings = data.Followings.length;
+      data.Followers = data.Followers.length;
+      res.status(200).json(data);
+    }
+    res.status(404).json("존재하지 않는 사용자입니다.");
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
 // 미들웨어 확장(next 사용을 위해)
 router.post("/login", isNotLoggedIn, (req, res, next) => {
   passport.authenticate("local", (err, user, info) => {

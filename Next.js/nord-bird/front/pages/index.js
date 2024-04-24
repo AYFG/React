@@ -65,21 +65,21 @@ const Home = () => {
 
 export const getServerSideProps = wrapper.getServerSideProps(
   async (context) => {
-    console.log("getServerSideProps start");
-    console.log(context.req.headers);
     const cookie = context.req ? context.req.headers.cookie : "";
     axios.defaults.headers.Cookie = "";
     if (context.req && cookie) {
+      // 이 조건문이 없으면 다른 사람의 쿠키 정보가 공유되어 다른 사람의 아이디로 접속될 수 있다.
       axios.defaults.headers.Cookie = cookie;
     }
+
     context.store.dispatch({
       type: LOAD_MY_INFO_REQUEST,
     });
     context.store.dispatch({
       type: LOAD_POSTS_REQUEST,
     });
+    // SSR 하기 위해 REQUEST가 SUCCESS가 될 때까지 기다리게 해준다.
     context.store.dispatch(END);
-    console.log("getServerSideProps end");
     await context.store.sagaTask.toPromise();
   }
 );
