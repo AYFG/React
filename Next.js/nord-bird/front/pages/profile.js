@@ -1,15 +1,11 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import Head from "next/head";
 import AppLayout from "./components/AppLayout";
 import { NicknameEditForm } from "./components/NicknameEditForm";
 import { FollowList } from "./components/FollowList";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import {
-  LOAD_FOLLOWERS_REQUEST,
-  LOAD_FOLLOWINGS_REQUEST,
-  LOAD_MY_INFO_REQUEST,
-} from "./reducer/user";
+import { LOAD_MY_INFO_REQUEST } from "./reducer/user";
 import wrapper from "./store/configureStore";
 import axios from "axios";
 import useSWR from "swr";

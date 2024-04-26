@@ -6,13 +6,21 @@ import { UserProfile } from "./UserProfile";
 import LoginForm from "./LoginForm";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
+import { useCallback } from "react";
+import router from "next/router";
+import useInput from "../hooks/useInput";
 
 const SearchInput = styled(Input.Search)`
   vertical-align: middle;
 `;
 
 const AppLayout = ({ children }) => {
+  const [searchInput, onChangeSearchInput] = useInput("");
   const { me } = useSelector((state) => state.user);
+
+  const onSearch = useCallback(() => {
+    router.push(`/hashtag/${searchInput}`);
+  }, [searchInput]);
   return (
     <div>
       <Menu mode="horizontal">
@@ -23,7 +31,12 @@ const AppLayout = ({ children }) => {
           <Link href="/profile">프로필</Link>
         </Menu.Item>
         <Menu.Item>
-          <SearchInput enterButton />
+          <SearchInput
+            enterButton
+            value={searchInput}
+            onChange={onChangeSearchInput}
+            onSearch={onSearch}
+          />
         </Menu.Item>
         <Menu.Item>
           <Link href="/signup">회원가입</Link>
@@ -38,7 +51,7 @@ const AppLayout = ({ children }) => {
         </Col>
         <Col xs={24} md={6}>
           <a
-            href="htts://www.zerocho.com"
+            href="https://www.zerocho.com"
             target="_blank"
             rel="noreferrer noopener"
           >

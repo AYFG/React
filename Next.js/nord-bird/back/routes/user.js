@@ -106,8 +106,9 @@ router.get("/:userId", async (req, res, next) => {
       data.Followings = data.Followings.length;
       data.Followers = data.Followers.length;
       res.status(200).json(data);
+    } else {
+      res.status(404).json("존재하지 않는 사용자입니다.");
     }
-    res.status(404).json("존재하지 않는 사용자입니다.");
   } catch (error) {
     console.error(error);
     next(error);

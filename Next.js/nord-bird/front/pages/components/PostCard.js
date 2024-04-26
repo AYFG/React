@@ -20,6 +20,7 @@ import {
   UNLIKE_POST_REQUEST,
 } from "../reducer/post";
 import FollowButton from "./FollowButton";
+import Link from "next/link";
 
 export const PostCard = ({ post }) => {
   const dispatch = useDispatch();
@@ -127,14 +128,26 @@ export const PostCard = ({ post }) => {
             }
           >
             <Card.Meta
-              avatar={<Avatar>{post.Retweet.User.nickname[0]}</Avatar>}
+              avatar={
+                <Link href={`/user/${post.Retweet.User.id}`}>
+                  <a>
+                    <Avatar>{post.Retweet.User.nickname[0]}</Avatar>
+                  </a>
+                </Link>
+              }
               title={post.Retweet.User.nickname}
               description={<PostCardContent postData={post.Retweet.content} />}
             />
           </Card>
         ) : (
           <Card.Meta
-            avatar={<Avatar>{post.User.nickname[0]}</Avatar>}
+            avatar={
+              <Link href={`/user/${post.User.id}`}>
+                <a>
+                  <Avatar>{post.User.nickname[0]}</Avatar>
+                </a>
+              </Link>
+            }
             title={post.User.nickname}
             description={<PostCardContent postData={post.content} />}
           />
@@ -151,7 +164,13 @@ export const PostCard = ({ post }) => {
               <li>
                 <Comment
                   author={item.User.nickname}
-                  avatar={<Avatar>{item.User.nickname[0]}</Avatar>}
+                  avatar={
+                    <Link href={`/user/${post.User.id}`}>
+                      <a>
+                        <Avatar>{post.User.nickname[0]}</Avatar>
+                      </a>
+                    </Link>
+                  }
                   content={item.content}
                 />
               </li>
