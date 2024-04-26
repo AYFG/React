@@ -10,7 +10,7 @@ export const UserProfile = () => {
   const onLogOut = useCallback(() => {
     dispatch(logoutRequestAction());
   }, []);
-  
+
   return (
     <Card
       actions={[
@@ -19,10 +19,10 @@ export const UserProfile = () => {
           {me.Posts.length}
         </div>,
         <div key="followings">
-          팔로워 <br />
+          팔로잉 <br />
           {me.Followings.length}
         </div>,
-        <div key="follwers">
+        <div key="followers">
           팔로워 <br />
           {me.Followers.length}
         </div>,

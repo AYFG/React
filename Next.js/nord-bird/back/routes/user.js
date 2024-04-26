@@ -43,7 +43,36 @@ router.get("/", async (req, res, next) => {
     next(error);
   }
 });
-
+// /:userId (와일드카드,params) 보다 밑에 있으면 userId가 followers인 것을 찾으려 하기 때문에 404에러가 나므로 와일드카드보다 위로 배치. 미들웨어 순서는 동기적
+router.get("/followers", isLoggedIn, async (req, res, next) => {
+  //GET /user/followers
+  try {
+    const user = await User.findOne({ where: { id: req.user.id } });
+    const followers = await user.getFollowers({
+      limit: parseInt(req.query.limit),
+    });
+    res.status(200).json(followers);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+router.get("/followings", isLoggedIn, async (req, res, next) => {
+  //GET /user/followings
+  try {
+    const user = await User.findOne({ where: { id: req.user.id } });
+    if (!user) {
+      res.status(403).send("팔로잉한 사람이 없습니다.");
+    }
+    const followings = await user.getFollowings({
+      limit: parseInt(req.query.limit),
+    });
+    res.status(200).json(followings);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
 // 특정 사용자 정보 GET
 router.get("/:userId", async (req, res, next) => {
   // GET /user/1
@@ -267,31 +296,6 @@ router.delete("/follower/:userId", isLoggedIn, async (req, res, next) => {
     }
     await user.removeFollowings(req.user.id);
     res.status(200).json({ UserId: parseInt(req.params.userId, 10) });
-  } catch (error) {
-    console.error(error);
-    next(error);
-  }
-});
-router.get("/followers", isLoggedIn, async (req, res, next) => {
-  //GET /user/followers
-  try {
-    const user = await User.findOne({ where: { id: req.user.id } });
-    const followers = await user.getFollowers();
-    res.status(200).json(followers);
-  } catch (error) {
-    console.error(error);
-    next(error);
-  }
-});
-router.get("/followings", isLoggedIn, async (req, res, next) => {
-  //GET /user/followings
-  try {
-    const user = await User.findOne({ where: { id: req.user.id } });
-    if (!user) {
-      res.status(403).send("팔로잉한 사람이 없습니다.");
-    }
-    const followings = await user.getFollowings();
-    res.status(200).json(followings);
   } catch (error) {
     console.error(error);
     next(error);
