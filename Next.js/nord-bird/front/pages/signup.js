@@ -2,12 +2,12 @@ import { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import Head from "next/head";
-import AppLayout from "./components/AppLayout";
+import AppLayout from "../components/AppLayout";
 import { Button, Checkbox, Form, Input } from "antd";
-import useInput from "./hooks/useInput";
-import { LOAD_MY_INFO_REQUEST, SIGN_UP_REQUEST } from "./reducer/user";
+import useInput from "../hooks/useInput";
+import { LOAD_MY_INFO_REQUEST, SIGN_UP_REQUEST } from "../reducer/user";
 import { useRouter } from "next/router";
-import wrapper from "./store/configureStore";
+import wrapper from "../store/configureStore";
 import { END } from "redux-saga";
 import axios from "axios";
 

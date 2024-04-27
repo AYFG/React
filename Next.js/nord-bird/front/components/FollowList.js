@@ -54,3 +54,5 @@ FollowList.propTypes = {
   onClickMore: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
 };
+
+export default FollowList;

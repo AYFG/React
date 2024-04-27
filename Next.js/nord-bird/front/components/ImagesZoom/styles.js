@@ -1,5 +1,5 @@
 import styled, { createGlobalStyle } from "styled-components";
-import { CloseOutlined, RightCircleOutlined } from "@ant-design/icons";
+import { CloseOutlined } from "@ant-design/icons";
 
 export const Global = createGlobalStyle`
   .slick-slide {

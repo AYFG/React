@@ -1,12 +1,12 @@
 import { useSelector } from "react-redux";
 import Head from "next/head";
-import AppLayout from "./components/AppLayout";
-import { NicknameEditForm } from "./components/NicknameEditForm";
-import { FollowList } from "./components/FollowList";
+import AppLayout from "../components/AppLayout";
+import { NicknameEditForm } from "../components/NicknameEditForm";
+import { FollowList } from "../components/FollowList";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import { LOAD_MY_INFO_REQUEST } from "./reducer/user";
-import wrapper from "./store/configureStore";
+import { LOAD_MY_INFO_REQUEST } from "../reducer/user";
+import wrapper from "../store/configureStore";
 import axios from "axios";
 import useSWR from "swr";
 import { END } from "redux-saga";

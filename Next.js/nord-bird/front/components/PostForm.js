@@ -1,11 +1,10 @@
 import { Button, Form, Input } from "antd";
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   ADD_POST_REQUEST,
   REMOVE_IMAGE,
   UPLOAD_IMAGES_REQUEST,
-  addPost,
 } from "../reducer/post";
 import { useEffect } from "react";
 import useInput from "../hooks/useInput";
@@ -105,3 +104,5 @@ export const PostForm = () => {
     </Form>
   );
 };
+
+export default PostForm;

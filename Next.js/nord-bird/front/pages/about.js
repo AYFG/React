@@ -1,10 +1,10 @@
 import React from "react";
-import wrapper from "./store/configureStore";
+import wrapper from "../store/configureStore";
 import { useSelector } from "react-redux";
-import AppLayout from "./components/AppLayout";
+import AppLayout from "../components/AppLayout";
 import Head from "next/head";
 import { Avatar, Card } from "antd";
-import { LOAD_USER_REQUEST } from "./reducer/user";
+import { LOAD_USER_REQUEST } from "../reducer/user";
 import { END } from "redux-saga";
 
 const About = () => {

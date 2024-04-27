@@ -51,3 +51,5 @@ export const UserProfile = () => {
     </Card>
   );
 };
+
+export default UserProfile;

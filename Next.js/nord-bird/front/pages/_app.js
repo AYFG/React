@@ -1,13 +1,13 @@
 import PropTypes from "prop-types";
 import "antd/dist/antd.css";
 import Head from "next/head";
-import Wrapper from "./store/configureStore";
+import Wrapper from "../store/configureStore";
 
 const NodeBird = ({ Component }) => {
   return (
     <>
       <Head>
-        <meta charset="utf-8" />
+        <meta charSet="utf-8" />
         <title>NodeBird</title>
       </Head>
 

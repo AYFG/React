@@ -9,20 +9,11 @@ import {
   ImgWrapper,
   Indicator,
   Global,
-  SlickPrevBtn,
 } from "./styles";
 
 const ImagesZoom = ({ images, onClose }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const PrevArrow = (props) => {
-    const { className, onClick } = props;
-    return (
-      <RightCircleOutlined
-        className={className} // 슬릭에서 사용하는 클래스 적용
-        onClick={onClick} // 클릭 이벤트 핸들러
-      />
-    );
-  };
+
   return (
     <Overlay>
       <Global />
@@ -39,7 +30,6 @@ const ImagesZoom = ({ images, onClose }) => {
             arrows={false}
             slidesToShow={1}
             slidesToScroll={1}
-            prevArrow={<SlickPrevBtn />}
           >
             {images.map((v) => (
               <ImgWrapper key={v.src}>
