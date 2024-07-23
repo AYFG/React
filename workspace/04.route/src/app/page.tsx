@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   
 }
 export default function Home() {
+  
   return (
     <h1>웅재</h1>
   );
