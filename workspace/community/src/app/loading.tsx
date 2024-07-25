@@ -1,5 +1,5 @@
-export default function loading() {
-  return (
-    <div>loading</div>
-  )
+import { FullScreen } from "@/components/Spinner";
+
+export default function Loading() {
+  return <FullScreen />;
 }
