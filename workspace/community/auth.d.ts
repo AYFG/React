@@ -9,11 +9,13 @@ export declare module "@auth/core/types" {
 // }
 
 interface User {
+        type: string,
         accessToken: string,
         refreshToken: string,
     }
-
+    
     interface Session {
+        type: string,
         accessToken: string,
         refreshToken: string,
     }

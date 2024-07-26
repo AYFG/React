@@ -1,4 +1,5 @@
-import { Metadata } from "next"
+import { Metadata } from "next";
+import Link from "next/link";
 import LoginForm from "./loginForm";
 
 export const metadata: Metadata = {
