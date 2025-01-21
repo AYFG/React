@@ -1,8 +1,13 @@
 import PrimaryButton from "@/components/PrimaryButton";
+import { Colors } from "@/constants/Colors";
 import React, { useState } from "react";
 import { Alert, StyleSheet, TextInput, View } from "react-native";
 
-export default function StartGameScreen() {
+export default function StartGameScreen({
+  onPickNumber,
+}: {
+  onPickNumber: (pickedNumber: number) => void;
+}) {
   const [enteredNumber, setEnteredNumber] = useState("");
 
   function numberInputHandler(inputText: string) {
@@ -22,7 +27,7 @@ export default function StartGameScreen() {
       ]);
       return;
     }
-    console.log("유효한 숫자");
+    onPickNumber(chosenNumber);
   }
   return (
     <View style={styles.inputContainer}>
@@ -51,7 +56,7 @@ const styles = StyleSheet.create({
     marginTop: 100,
     marginHorizontal: 24,
     padding: 16,
-    backgroundColor: "#4e0329",
+    backgroundColor: Colors.primary700,
     borderRadius: 8,
     elevation: 4, // android shadow
     shadowColor: "black", // ios shadow
@@ -63,9 +68,9 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     fontSize: 32,
-    borderBottomColor: "#ddb52f",
+    borderBottomColor: Colors.accent500,
     borderBottomWidth: 2,
-    color: "#ddb52f",
+    color: Colors.accent500,
     marginVertical: 16,
     fontWeight: "bold",
     textAlign: "center",
