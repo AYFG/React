@@ -1,3 +1,4 @@
+import GameOverScreen from "@/screens/GameOverScreen";
 import GameScreen from "@/screens/GameScreen";
 import StartGameScreen from "@/screens/StartGameScreen";
 import { LinearGradient } from "expo-linear-gradient";
@@ -7,7 +8,7 @@ import { Colors } from "react-native/Libraries/NewAppScreen";
 
 export default function HomeScreen() {
   const [userNumber, setUserNumber] = useState<number | null>(null);
-
+  const [gameIsOver, setGameIsOver] = useState(true);
   function pickedNumberHandler(pickedNumber: number) {
     setUserNumber(pickedNumber);
   }
@@ -15,7 +16,11 @@ export default function HomeScreen() {
   let screen = <StartGameScreen onPickNumber={pickedNumberHandler} />;
 
   if (userNumber) {
-    screen = <GameScreen />;
+    screen = <GameScreen userNumber={userNumber} />;
+  }
+
+  if (gameIsOver) {
+    screen = <GameOverScreen />;
   }
 
   return (
