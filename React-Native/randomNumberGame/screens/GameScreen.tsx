@@ -1,8 +1,10 @@
 import NumberContainer from "@/components/game/NumberContainer";
+import Card from "@/components/ui/Card";
+import InstructionText from "@/components/ui/InstructionText";
 import PrimaryButton from "@/components/ui/PrimaryButton";
 import Title from "@/components/ui/Title";
-import { useState } from "react";
-import { Alert, StyleSheet, Text, View } from "react-native";
+import { useEffect, useState } from "react";
+import { Alert, StyleSheet, View } from "react-native";
 
 function generateRandomBetween(min: number, max: number, exclude: number) {
   const randomNumber = Math.floor(Math.random() * (max - min)) + min;
@@ -17,9 +19,20 @@ function generateRandomBetween(min: number, max: number, exclude: number) {
 let minBoundary = 1;
 let maxBoundary = 100;
 
-export default function GameScreen(this: string, { userNumber }: { userNumber: number }) {
-  const initialGuess = generateRandomBetween(minBoundary, maxBoundary, userNumber);
+interface GameScreenProps {
+  userNumber: number;
+  onGameOver: () => void;
+}
+
+export default function GameScreen(this: string, { userNumber, onGameOver }: GameScreenProps) {
+  const initialGuess = generateRandomBetween(1, 100, userNumber);
   const [currentGuess, setCurrentGuess] = useState(initialGuess);
+
+  useEffect(() => {
+    if (currentGuess === userNumber) {
+      onGameOver();
+    }
+  }, [currentGuess, userNumber, onGameOver]);
 
   function nextGuessHandler(direction: "lower" | "greater") {
     if (
@@ -42,13 +55,19 @@ export default function GameScreen(this: string, { userNumber }: { userNumber: n
     <View style={styles.screen}>
       <Title>상대방의 추측</Title>
       <NumberContainer>{currentGuess}</NumberContainer>
-      <View style={styles.buttonContainer}>
-        <PrimaryButton onPress={nextGuessHandler.bind(this, "lower")}>-</PrimaryButton>
-        <PrimaryButton onPress={nextGuessHandler.bind(this, "greater")}>+</PrimaryButton>
-      </View>
-      <View>
-        <Text>Higher or lower?</Text>
-      </View>
+      <Card>
+        <InstructionText style={styles.instructionText}>
+          이 숫자보다 높은가요? 낮은가요?
+        </InstructionText>
+        <View style={styles.buttonsContainer}>
+          <View style={styles.buttonContainer}>
+            <PrimaryButton onPress={nextGuessHandler.bind(this, "lower")}>-</PrimaryButton>
+          </View>
+          <View style={styles.buttonContainer}>
+            <PrimaryButton onPress={nextGuessHandler.bind(this, "greater")}>+</PrimaryButton>
+          </View>
+        </View>
+      </Card>
       {/* <View>LOG ROUNDS</View> */}
     </View>
   );
@@ -59,8 +78,13 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 40,
   },
+  instructionText: {
+    marginBottom: 12,
+  },
   buttonContainer: {
     flex: 1,
+  },
+  buttonsContainer: {
     flexDirection: "row",
   },
 });
