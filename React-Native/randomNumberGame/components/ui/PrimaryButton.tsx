@@ -6,7 +6,7 @@ export default function PrimaryButton({
   children,
   onPress,
 }: {
-  children: string;
+  children: React.ReactNode;
   onPress: () => void;
 }) {
   return (

@@ -4,7 +4,8 @@ import InstructionText from "@/components/ui/InstructionText";
 import PrimaryButton from "@/components/ui/PrimaryButton";
 import Title from "@/components/ui/Title";
 import { useEffect, useState } from "react";
-import { Alert, StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, View, Text } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
 function generateRandomBetween(min: number, max: number, exclude: number) {
   const randomNumber = Math.floor(Math.random() * (max - min)) + min;
@@ -61,10 +62,16 @@ export default function GameScreen(this: string, { userNumber, onGameOver }: Gam
         </InstructionText>
         <View style={styles.buttonsContainer}>
           <View style={styles.buttonContainer}>
-            <PrimaryButton onPress={nextGuessHandler.bind(this, "lower")}>-</PrimaryButton>
+            <PrimaryButton onPress={nextGuessHandler.bind(this, "lower")}>
+              <Ionicons name="remove" size={24} color="white" />
+            </PrimaryButton>
           </View>
           <View style={styles.buttonContainer}>
-            <PrimaryButton onPress={nextGuessHandler.bind(this, "greater")}>+</PrimaryButton>
+            <PrimaryButton onPress={nextGuessHandler.bind(this, "greater")}>
+              <Text>
+                <Ionicons name="add" size={24} color="white" />
+              </Text>
+            </PrimaryButton>
           </View>
         </View>
       </Card>
