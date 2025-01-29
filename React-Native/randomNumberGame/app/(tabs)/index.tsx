@@ -5,10 +5,22 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useState } from "react";
 import { StyleSheet, ImageBackground, SafeAreaView } from "react-native";
 import { Colors } from "../../constants/Colors";
+import { useFonts } from "expo-font";
+import * as SplashScreen from "expo-splash-screen";
 
 export default function HomeScreen() {
   const [userNumber, setUserNumber] = useState<number | null>(null);
   const [gameIsOver, setGameIsOver] = useState(true);
+
+  const [fontsLoaded] = useFonts({
+    "open-sans": require("@/assets/fonts/OpenSans-Regular.ttf"),
+    "open-sans-bold": require("@/assets/fonts/OpenSans-Bold.ttf"),
+    "space-mono": require("@/assets/fonts/SpaceMono-Regular.ttf"),
+  });
+
+  if (!fontsLoaded) {
+    SplashScreen.preventAutoHideAsync();
+  }
 
   function pickedNumberHandler(pickedNumber: number) {
     setUserNumber(pickedNumber);
