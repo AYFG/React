@@ -15,7 +15,6 @@ export default function HomeScreen() {
   const [fontsLoaded] = useFonts({
     "open-sans": require("@/assets/fonts/OpenSans-Regular.ttf"),
     "open-sans-bold": require("@/assets/fonts/OpenSans-Bold.ttf"),
-    "space-mono": require("@/assets/fonts/SpaceMono-Regular.ttf"),
   });
 
   if (!fontsLoaded) {
