@@ -1,15 +1,28 @@
+import PrimaryButton from "@/components/ui/PrimaryButton";
 import Title from "@/components/ui/Title";
 import { Colors } from "@/constants/Colors";
 import { Image, StyleSheet, Text, View } from "react-native";
 
-export default function GameOverScreen() {
+export default function GameOverScreen({
+  roundsNumber,
+  userNumber,
+  onStartNewGame,
+}: {
+  roundsNumber: number;
+  userNumber: number;
+  onStartNewGame: () => void;
+}) {
   return (
     <View style={styles.rootContainer}>
       <Title>GAME OVER!</Title>
       <View style={styles.imageContainer}>
         <Image style={styles.image} source={require("../assets/images/success.png")} />
       </View>
-      <Text>당신의 휴대폰은 X 번의 라운드만에 숫자 Y 를 맞혔습니다.</Text>
+      <Text style={styles.summaryText}>
+        당신의 휴대폰은 <Text style={styles.highlight}>{roundsNumber}</Text> 번의 라운드만에 숫자{" "}
+        <Text style={styles.highlight}>{userNumber}</Text> 를 맞혔습니다.
+      </Text>
+      <PrimaryButton onPress={onStartNewGame}>다시하기</PrimaryButton>
     </View>
   );
 }
@@ -28,10 +41,20 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderColor: Colors.primary800,
     overflow: "hidden",
-    // margin: "auto",
+    margin: 36,
   },
   image: {
     width: "100%",
     height: "100%",
+  },
+  summaryText: {
+    fontFamily: "open-sans",
+    fontSize: 24,
+    textAlign: "center",
+    marginBottom: 24,
+  },
+  highlight: {
+    fontFamily: "open-sans-bold",
+    color: Colors.primary500,
   },
 });
