@@ -7,6 +7,8 @@ import React, { useState } from "react";
 import {
   Alert,
   Dimensions,
+  KeyboardAvoidingView,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -21,6 +23,7 @@ export default function StartGameScreen({
 }) {
   const [enteredNumber, setEnteredNumber] = useState("");
   const { width, height } = useWindowDimensions();
+
   function numberInputHandler(inputText: string) {
     setEnteredNumber(inputText);
   }
@@ -43,33 +46,40 @@ export default function StartGameScreen({
 
   const marginTopDistance = height < 380 ? 30 : 100;
   return (
-    <View style={[styles.rootContainer, { marginTop: marginTopDistance }]}>
-      <Title>내 번호를 맞춰라</Title>
-      <Card>
-        <InstructionText>숫자를 입력하세요</InstructionText>
-        <TextInput
-          value={enteredNumber}
-          onChangeText={numberInputHandler}
-          style={styles.numberInput}
-          maxLength={2}
-          keyboardType="number-pad"
-        />
-        <View style={styles.buttonsContainer}>
-          <View style={styles.buttonContainer}>
-            <PrimaryButton onPress={resetInputHandler}>Reset</PrimaryButton>
-          </View>
-          <View style={styles.buttonContainer}>
-            <PrimaryButton onPress={confirmInputHandler}>Confirm</PrimaryButton>
-          </View>
+    <ScrollView style={styles.screen}>
+      <KeyboardAvoidingView style={styles.screen} behavior="position">
+        <View style={[styles.rootContainer, { marginTop: marginTopDistance }]}>
+          <Title>내 번호를 맞춰라</Title>
+          <Card>
+            <InstructionText>숫자를 입력하세요</InstructionText>
+            <TextInput
+              value={enteredNumber}
+              onChangeText={numberInputHandler}
+              style={styles.numberInput}
+              maxLength={2}
+              keyboardType="number-pad"
+            />
+            <View style={styles.buttonsContainer}>
+              <View style={styles.buttonContainer}>
+                <PrimaryButton onPress={resetInputHandler}>Reset</PrimaryButton>
+              </View>
+              <View style={styles.buttonContainer}>
+                <PrimaryButton onPress={confirmInputHandler}>Confirm</PrimaryButton>
+              </View>
+            </View>
+          </Card>
         </View>
-      </Card>
-    </View>
+      </KeyboardAvoidingView>
+    </ScrollView>
   );
 }
 
 // const deviceHeight = Dimensions.get("window").height;
 
 const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+  },
   rootContainer: {
     flex: 1,
     // marginTop: deviceHeight < 380 ? 30 : 10,
