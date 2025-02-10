@@ -4,7 +4,15 @@ import PrimaryButton from "@/components/ui/PrimaryButton";
 import Title from "@/components/ui/Title";
 import { Colors } from "@/constants/Colors";
 import React, { useState } from "react";
-import { Alert, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  Alert,
+  Dimensions,
+  StyleSheet,
+  Text,
+  TextInput,
+  useWindowDimensions,
+  View,
+} from "react-native";
 
 export default function StartGameScreen({
   onPickNumber,
@@ -12,7 +20,7 @@ export default function StartGameScreen({
   onPickNumber: (pickedNumber: number) => void;
 }) {
   const [enteredNumber, setEnteredNumber] = useState("");
-
+  const { width, height } = useWindowDimensions();
   function numberInputHandler(inputText: string) {
     setEnteredNumber(inputText);
   }
@@ -32,8 +40,10 @@ export default function StartGameScreen({
     }
     onPickNumber(chosenNumber);
   }
+
+  const marginTopDistance = height < 380 ? 30 : 100;
   return (
-    <View style={styles.rootContainer}>
+    <View style={[styles.rootContainer, { marginTop: marginTopDistance }]}>
       <Title>내 번호를 맞춰라</Title>
       <Card>
         <InstructionText>숫자를 입력하세요</InstructionText>
@@ -57,10 +67,12 @@ export default function StartGameScreen({
   );
 }
 
+// const deviceHeight = Dimensions.get("window").height;
+
 const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
-    marginTop: 100,
+    // marginTop: deviceHeight < 380 ? 30 : 10,
     alignItems: "center",
   },
 
