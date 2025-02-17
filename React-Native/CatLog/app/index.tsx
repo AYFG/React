@@ -1,5 +1,4 @@
 import { Text, View } from "react-native";
-import Login from "./Login";
 
 export default function Index() {
   return (
@@ -10,8 +9,7 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-      <Text className="text-red-600">Edafsit app/index.tsx to edit this screen.</Text>
-      <Login />
+      <Text>Edit app/index.tsx to edit this screen.</Text>
     </View>
   );
 }

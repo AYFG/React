@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "thumb-wars",
-    "slug": "thumb-wars",
+    "name": "CatLog",
+    "slug": "CatLog",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
