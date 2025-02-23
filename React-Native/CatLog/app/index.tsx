@@ -1,3 +1,4 @@
+import "../global.css";
 import Rive from "rive-react-native";
 import { StyleSheet, Text, View } from "react-native";
 
@@ -15,8 +16,8 @@ function RiveDemo() {
 export default function App() {
   return (
     <View style={styles.container}>
-      <RiveDemo />
-      <Text className="c">test</Text>
+      {/* <RiveDemo /> */}
+      <Text className="p-10 bg-red-500 text-blue-600">test</Text>
     </View>
   );
 }
