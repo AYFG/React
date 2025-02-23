@@ -1,15 +1,31 @@
-import { Text, View } from "react-native";
+import Rive from "rive-react-native";
+import { StyleSheet, Text, View } from "react-native";
 
-export default function Index() {
+function RiveDemo() {
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text>Edit app/index.tsx to edit this screen.</Text>
+    <Rive
+      url="https://public.rive.app/community/runtime-files/2195-4346-avatar-pack-use-case.riv"
+      artboardName="Avatar 1"
+      stateMachineName="avatar"
+      style={{ width: 400, height: 400 }}
+    />
+  );
+}
+
+export default function App() {
+  return (
+    <View style={styles.container}>
+      <RiveDemo />
+      <Text className="c">test</Text>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
