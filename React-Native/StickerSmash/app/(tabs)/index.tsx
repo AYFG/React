@@ -1,6 +1,6 @@
+import { StyleSheet, View, Platform } from "react-native";
 import Button from "@/components/Button";
 import ImageViewer from "@/components/ImageViewer";
-import { StyleSheet, View } from "react-native";
 import IconButton from "@/components/IconButton";
 import CircleButton from "@/components/CircleButton";
 import EmojiPicker from "@/components/EmojiPicker";
@@ -13,6 +13,8 @@ import * as ImagePicker from "expo-image-picker";
 import * as MediaLibrary from "expo-media-library";
 import { captureRef } from "react-native-view-shot";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import domtoimage from "dom-to-image";
+
 const PlaceholderImage = require("@/assets/images/background-image.png");
 
 export default function Index() {
@@ -50,17 +52,34 @@ export default function Index() {
   };
 
   const onSaveImageAsync = async () => {
-    try {
-      const localUri = await captureRef(imageRef, {
-        height: 440,
-        quality: 1,
-      });
-      await MediaLibrary.saveToLibraryAsync(localUri);
-      if (localUri) {
-        alert("저장되었습니다.");
+    if (Platform.OS === "web") {
+      try {
+        const dataUrl = await domtoimage.toJpeg(imageRef.current, {
+          quality: 0.95,
+          width: 320,
+          height: 440,
+        });
+
+        let link = document.createElement("a");
+        link.download = "sticker-smash.jpeg";
+        link.href = dataUrl;
+        link.click();
+      } catch (err) {
+        console.error(err);
       }
-    } catch (err) {
-      console.error(err);
+    } else {
+      try {
+        const localUri = await captureRef(imageRef, {
+          height: 440,
+          quality: 1,
+        });
+        await MediaLibrary.saveToLibraryAsync(localUri);
+        if (localUri) {
+          alert("저장되었습니다.");
+        }
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
 
