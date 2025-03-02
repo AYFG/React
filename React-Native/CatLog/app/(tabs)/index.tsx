@@ -21,7 +21,7 @@ export default function App() {
       <View>
         <Text className="p-10 mb-10 bg-prelude">고양이 애니메이션?</Text>
       </View>
-      <Pressable onPress={() => router.push("/Calendar")}>
+      <Pressable onPress={() => router.push("/CalendarScreen")}>
         <Text className="p-10 mb-10 bg-prelude">반려묘의 루틴을 등록해보세요</Text>
       </Pressable>
       <Pressable onPress={() => router.push("/Login")}>

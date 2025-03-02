@@ -28,7 +28,7 @@ export default function RootLayout() {
         }}
       />
       <Tabs.Screen
-        name="Calendar"
+        name="CalendarScreen"
         options={{
           title: "",
           tabBarIcon: ({ color, focused }) => (
