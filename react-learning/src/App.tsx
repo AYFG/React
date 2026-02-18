@@ -17,9 +17,18 @@ import UseOptimisticDemo from './pages/HooksDemo/UseOptimisticDemo';
 // Form Actions (React 19)
 import FormActionsDemo from './pages/FormsDemo/FormActionsDemo';
 import UseFormStatusDemo from './pages/FormsDemo/UseFormStatusDemo';
+import FormStatusWithoutServerActionDemo from './pages/FormsDemo/FormStatusWithoutServerActionDemo';
 
 // Suspense
 import SuspenseBasicDemo from './pages/SuspenseDemo/SuspenseBasicDemo';
+
+// Powerful Features (React 19/18 강력한 기능들)
+import PowerfulFeaturesOverview from './pages/PowerfulFeatures/PowerfulFeaturesOverview';
+import UseTransitionDemoFeature from './pages/PowerfulFeatures/UseTransitionDemo';
+import UseOptimisticDemoFeature from './pages/PowerfulFeatures/UseOptimisticDemo';
+import ServerActionsDemo from './pages/PowerfulFeatures/ServerActionsDemo';
+import UseDeferredValueDemoFeature from './pages/PowerfulFeatures/UseDeferredValueDemo';
+import SuspenseDemoFeature from './pages/PowerfulFeatures/SuspenseDemo';
 
 import './App.css';
 
@@ -48,6 +57,29 @@ function App() {
 
         {/* Suspense */}
         <Route path="/suspense/basic" element={<SuspenseBasicDemo />} />
+
+        {/* Powerful Features (React 19/18 강력한 기능들) */}
+        <Route path="/powerful-features" element={<PowerfulFeaturesOverview />} />
+        <Route
+          path="/powerful-features/use-transition"
+          element={<UseTransitionDemoFeature />}
+        />
+        <Route
+          path="/powerful-features/use-optimistic"
+          element={<UseOptimisticDemoFeature />}
+        />
+        <Route
+          path="/powerful-features/server-actions"
+          element={<ServerActionsDemo />}
+        />
+        <Route
+          path="/powerful-features/use-deferred-value"
+          element={<UseDeferredValueDemoFeature />}
+        />
+        <Route
+          path="/powerful-features/suspense-streaming"
+          element={<SuspenseDemoFeature />}
+        />
       </Routes>
     </BrowserRouter>
   );

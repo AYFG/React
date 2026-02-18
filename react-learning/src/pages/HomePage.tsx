@@ -49,6 +49,19 @@ export default function HomePage() {
             <li><Link to="/suspense/transitions">Transitions - UX 개선</Link></li>
           </ul>
         </section>
+
+        <section className="learning-section powerful-features">
+          <h2>🔥 React 19/18의 강력한 기능들</h2>
+          <p>성능 최적화와 개발 효율을 극적으로 개선하는 고급 기능들을 학습합니다.</p>
+          <ul>
+            <li><Link to="/powerful-features">📋 전체 개요 및 비교</Link></li>
+            <li><Link to="/powerful-features/use-transition">⚡ useTransition - 우선순위 렌더링</Link></li>
+            <li><Link to="/powerful-features/use-optimistic">✨ useOptimistic - 낙관적 UI</Link></li>
+            <li><Link to="/powerful-features/server-actions">🚀 Server Actions - 직접 함수 호출</Link></li>
+            <li><Link to="/powerful-features/use-deferred-value">🎯 useDeferredValue - 값 지연</Link></li>
+            <li><Link to="/powerful-features/suspense-streaming">🌊 Suspense - 스트리밍 렌더링</Link></li>
+          </ul>
+        </section>
       </main>
 
       <footer>
